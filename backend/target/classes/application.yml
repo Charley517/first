@@ -1,0 +1,81 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: logistics-system
+
+  # MySQL配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/logistics?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: zrzr5177y
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+
+  # MongoDB配置
+  data:
+    mongodb:
+      uri: mongodb://192.168.181.130:27017/logistics
+      database: logistics
+
+  # Redis配置
+  redis:
+    host: 192.168.181.130
+    port: 6379
+    database: 0
+
+  # RabbitMQ配置
+  rabbitmq:
+    host: 192.168.181.130
+    port: 5672
+    username: guest
+    password: guest
+
+  # 邮件配置
+  mail:
+    host: smtp.qq.com
+    port: 587
+    username: your-email@qq.com
+    password: your-email-password
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+  # Nacos配置
+  cloud:
+    nacos:
+      server-addr: 192.168.181.130:8848
+
+# MinIO配置
+minio:
+  endpoint: http://192.168.181.130:9000
+  access-key: minioadmin
+  secret-key: minioadmin
+
+# 高德地图API配置
+amap:
+  key: 9b71a762b3626491b50106bfe502e4b5
+  base-url: https://restapi.amap.com/v3
+
+# 通知配置
+notification:
+  dingtalk:
+    webhook: https://oapi.dingtalk.com/robot/send?access_token=your-token
+  email:
+    from: your-email@qq.com
+
+# 日志配置
+logging:
+  level:
+    com.example.logistics: DEBUG
+    org.springframework.data.mongodb: INFO

@@ -1,0 +1,31 @@
+spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: logistics_test
+  mail:
+    host: smtp.example.com
+    port: 587
+    username: test@example.com
+    password: testpassword
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+notification:
+  dingtalk:
+    webhook: https://oapi.dingtalk.com/robot/send?access_token=test_token
+  email:
+    from: test@example.com
+
+amap:
+  key: test_key
+  base-url: http://test-url 
