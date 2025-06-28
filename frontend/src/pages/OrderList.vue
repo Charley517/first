@@ -94,7 +94,7 @@
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import axios from 'axios'
+import { orderApi } from '@/api'
 
 const router = useRouter()
 const loading = ref(false)
@@ -112,16 +112,9 @@ const searchForm = reactive({
 const loadOrders = async () => {
   loading.value = true
   try {
-    const res = await axios.get('/api/order/list', {
-      params: {
-        page: currentPage.value - 1,
-        size: pageSize.value,
-        orderNumber: searchForm.orderNumber,
-        status: searchForm.status
-      }
-    })
-    orders.value = res.data.content
-    total.value = res.data.totalElements
+    const res = await orderApi.getOrderList({})
+    orders.value = res
+    total.value = res.length
   } catch (error) {
     ElMessage.error('加载订单列表失败')
   } finally {

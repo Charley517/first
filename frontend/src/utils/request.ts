@@ -42,16 +42,21 @@ service.interceptors.response.use(
     const globalStore = useGlobalStore()
     globalStore.setLoading(false)
     
-    const { code, message, data } = response.data
-    
-    // 根据自定义错误码判断请求是否成功
-    if (code === 200) {
-      return data
-    } else {
-      // 处理业务错误
-      ElMessage.error(message || '请求失败')
-      return Promise.reject(new Error(message || '请求失败'))
+    const res = response.data
+
+    // 如果后端返回的对象包含自定义code，则按照统一格式处理
+    if (res && typeof res === 'object' && 'code' in res) {
+      const { code, message, data } = res
+      if (code === 200) {
+        return data
+      } else {
+        ElMessage.error(message || '请求失败')
+        return Promise.reject(new Error(message || '请求失败'))
+      }
     }
+
+    // 否则直接返回原始数据
+    return res
   },
   (error) => {
     const globalStore = useGlobalStore()
