@@ -102,6 +102,19 @@ public class OrderServiceImpl implements OrderService {
             // 通知发送失败不影响主流程
         }
 
+        // 更新配送员绩效
+        if (oldStatus != Order.OrderStatus.已签收 && status == Order.OrderStatus.已签收) {
+            Courier courier = savedOrder.getCourier();
+            if (courier != null) {
+                Double score = courier.getPerformanceScore();
+                if (score == null) {
+                    score = 0.0;
+                }
+                courier.setPerformanceScore(score + 1);
+                courierRepository.save(courier);
+            }
+        }
+
         return savedOrder;
     }
 

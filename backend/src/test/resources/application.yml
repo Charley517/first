@@ -1,9 +1,19 @@
 spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
   data:
     mongodb:
       host: localhost
       port: 27017
       database: logistics_test
+
   mail:
     host: smtp.example.com
     port: 587
@@ -24,4 +34,4 @@ notification:
 
 amap:
   key: test_key
-  base-url: http://test-url 
+  base-url: http://test-url
