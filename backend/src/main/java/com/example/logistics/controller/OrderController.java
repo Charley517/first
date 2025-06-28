@@ -66,6 +66,12 @@ public class OrderController {
         return courierRepository.save(courier);
     }
 
+    // 删除订单
+    @DeleteMapping("/{id}")
+    public void deleteOrder(@PathVariable Long id) {
+        orderService.deleteOrder(id);
+    }
+
     @Data
     public static class CreateOrderRequest {
         private Long senderId;

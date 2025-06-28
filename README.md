@@ -41,6 +41,11 @@ logistics-system/
 - Redis 6.0+
 - RabbitMQ 3.8+
 
+## Development Setup
+
+- Ensure [Maven](https://maven.apache.org/) is installed or include the Maven wrapper script (`mvnw`).
+- Run tests with `mvn test` from the `backend` directory.
+
 ## 快速开始
 
 ### 后端启动

@@ -8,10 +8,12 @@ spring:
     hibernate:
       ddl-auto: create-drop
     database-platform: org.hibernate.dialect.H2Dialect
-  mongodb:
-    host: localhost
-    port: 27017
-    database: logistics_test
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: logistics_test
+
   mail:
     host: smtp.example.com
     port: 587
@@ -23,11 +25,13 @@ spring:
           auth: true
           starttls:
             enable: true
+
 notification:
   dingtalk:
     webhook: https://oapi.dingtalk.com/robot/send?access_token=test_token
   email:
     from: test@example.com
+
 amap:
   key: test_key
   base-url: http://test-url

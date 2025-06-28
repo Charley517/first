@@ -80,7 +80,8 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     @CacheEvict(value = "orders", key = "#orderId")
     public Order updateOrderStatus(Long orderId, Order.OrderStatus status) {
-        Order order = getOrderById(orderId);
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("订单不存在"));
         Order.OrderStatus oldStatus = order.getStatus();
         order.setStatus(status);
         order.setUpdatedTime(LocalDateTime.now());
@@ -134,4 +135,14 @@ public class OrderServiceImpl implements OrderService {
         // 基础运费 + 重量费用 + 距离费用
         return 5 + weight * 0.8 + distance * 0.5;
     }
-} 
+
+    @Override
+    @Transactional
+    @CacheEvict(value = "orders", key = "#orderId")
+    public void deleteOrder(Long orderId) {
+        if (!orderRepository.existsById(orderId)) {
+            throw new RuntimeException("订单不存在");
+        }
+        orderRepository.deleteById(orderId);
+    }
+}
