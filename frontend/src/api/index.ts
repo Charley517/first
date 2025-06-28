@@ -121,7 +121,7 @@ export const mapApi = {
   },
   // 逆地理编码
   reverseGeocode: (location: Location) => {
-    return get<ResponseData<{ address: string }>>('/api/map/reverse-geocode', location)
+    return get<ResponseData<{ address: string }>>('/api/map/regeocode', location)
   }
 }
 
