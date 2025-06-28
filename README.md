@@ -32,6 +32,7 @@ logistics-system/
 ├── frontend/                         # Vue3 前端
 └── doc/                             # 项目文档
 ```
+项目相关文档位于 `doc/` 目录，后续会在其中补充更详细的说明。
 
 ## 开发环境要求
 - JDK 11+
