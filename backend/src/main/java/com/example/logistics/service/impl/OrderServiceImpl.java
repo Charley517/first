@@ -9,7 +9,6 @@ import com.example.logistics.repository.UserRepository;
 import com.example.logistics.service.NotificationService;
 import com.example.logistics.service.OrderService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Lazy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -28,8 +27,6 @@ public class OrderServiceImpl implements OrderService {
     private final UserRepository userRepository;
     private final CourierRepository courierRepository;
     private final NotificationService notificationService;
-    @Lazy
-    private final OrderService orderService;
 
     @Override
     @Transactional
@@ -83,7 +80,8 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     @CacheEvict(value = "orders", key = "#orderId")
     public Order updateOrderStatus(Long orderId, Order.OrderStatus status) {
-        Order order = orderService.getOrderById(orderId);
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("订单不存在"));
         Order.OrderStatus oldStatus = order.getStatus();
         order.setStatus(status);
         order.setUpdatedTime(LocalDateTime.now());
