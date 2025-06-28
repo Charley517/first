@@ -58,4 +58,10 @@ public interface OrderService {
      * @return 运费
      */
     double calculateFee(double weight, double distance);
-} 
+
+    /**
+     * 删除订单
+     * @param orderId 订单ID
+     */
+    void deleteOrder(Long orderId);
+}
