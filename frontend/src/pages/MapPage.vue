@@ -76,6 +76,8 @@ const routeInfo = ref<any>(null)
 let map: any = null
 let polyline: any = null
 let markers: any[] = []
+const originCoords = ref<number[] | null>(null)
+const destinationCoords = ref<number[] | null>(null)
 
 // 初始化地图
 onMounted(() => {
@@ -103,9 +105,11 @@ const getOriginLocation = async () => {
       params: { address: form.origin }
     })
     if (res.data.status === '1' && res.data.geocodes.length > 0) {
-      const location = res.data.geocodes[0].location
-      addMarker(location, '起点')
-      map.setCenter([location.lng, location.lat])
+      const loc = res.data.geocodes[0].location
+      const [lng, lat] = loc.split(',').map(Number)
+      originCoords.value = [lng, lat]
+      addMarker({ lng, lat }, '起点')
+      map.setCenter([lng, lat])
     } else {
       ElMessage.error('未找到起点位置')
     }
@@ -125,9 +129,11 @@ const getDestinationLocation = async () => {
       params: { address: form.destination }
     })
     if (res.data.status === '1' && res.data.geocodes.length > 0) {
-      const location = res.data.geocodes[0].location
-      addMarker(location, '终点')
-      map.setCenter([location.lng, location.lat])
+      const loc = res.data.geocodes[0].location
+      const [lng, lat] = loc.split(',').map(Number)
+      destinationCoords.value = [lng, lat]
+      addMarker({ lng, lat }, '终点')
+      map.setCenter([lng, lat])
     } else {
       ElMessage.error('未找到终点位置')
     }
@@ -148,7 +154,7 @@ const addMarker = (location: any, title: string) => {
 
 // 获取路线
 const getRoute = async () => {
-  if (!form.origin || !form.destination) {
+  if (!originCoords.value || !destinationCoords.value) {
     ElMessage.warning('请输入起点和终点地址')
     return
   }
@@ -157,8 +163,8 @@ const getRoute = async () => {
   try {
     const res = await axios.get('/api/map/route', {
       params: {
-        origin: form.origin,
-        destination: form.destination
+        origin: originCoords.value.join(','),
+        destination: destinationCoords.value.join(',')
       }
     })
 
