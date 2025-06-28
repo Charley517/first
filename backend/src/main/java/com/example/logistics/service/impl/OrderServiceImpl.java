@@ -124,4 +124,14 @@ public class OrderServiceImpl implements OrderService {
         // 基础运费 + 重量费用 + 距离费用
         return 5 + weight * 0.8 + distance * 0.5;
     }
-} 
+
+    @Override
+    @Transactional
+    @CacheEvict(value = "orders", key = "#orderId")
+    public void deleteOrder(Long orderId) {
+        if (!orderRepository.existsById(orderId)) {
+            throw new RuntimeException("订单不存在");
+        }
+        orderRepository.deleteById(orderId);
+    }
+}
