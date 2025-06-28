@@ -57,6 +57,7 @@ public class Order {
     public enum OrderStatus {
         已揽件,
         运输中,
-        已签收
+        已签收,
+        已取消
     }
-} 
+}
