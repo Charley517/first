@@ -229,9 +229,16 @@ const handleDelete = async (row: any) => {
 }
 
 // 查看位置
-const viewLocation = (row: any) => {
-  // TODO: 实现查看位置功能
-  ElMessage.info('查看位置功能开发中')
+const viewLocation = async (row: any) => {
+  try {
+    const courier = await courierApi.getCourierDetail(row.id)
+    const location = courier.currentLocation || '未知'
+    await ElMessageBox.alert(`当前位置：${location}`, '配送员位置', {
+      confirmButtonText: '确定'
+    })
+  } catch (error) {
+    ElMessage.error('获取配送员位置失败')
+  }
 }
 
 // 获取状态类型
