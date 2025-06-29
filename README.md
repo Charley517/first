@@ -65,3 +65,6 @@ logistics-system/
 - 请确保 MongoDB、Redis、RabbitMQ 服务已启动
 - 使用前请替换高德地图 API Key
 - 建议使用 IDE 进行开发（推荐 IntelliJ IDEA 和 VS Code） 
+## 扩展模块说明
+- **Nacos**：提供服务注册及配置管理能力，实现微服务环境的统一配置
+- **MinIO**：用于对象存储，可以保存物流单据等文件
